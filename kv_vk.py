@@ -42,7 +42,13 @@ def flip_kv_vk_safe(d: dict[KT, KV]) -> dict[KV, list[KT]]:
         '+3': ['Москва', 'Санкт-Петербург'],
     }
     """
-    raise NotImplementedError
+    res = {}
+    for key, value in d.items():
+        if value in res:
+            res[value].append(key)
+        else:
+            res[value] = key
+    return res
 
 
 if __name__ == '__main__':
