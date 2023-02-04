@@ -28,7 +28,29 @@ class Graph:
         self._root = root
 
     def dfs(self) -> list[Node]:
-        raise NotImplementedError
+        search_list = []
+
+        def __dfs(n: Node):
+            if n in search_list: return
+            search_list.append(n)
+            for node in n.outbound:
+                __dfs(node)
+
+        __dfs(self._root)
+        return search_list
 
     def bfs(self) -> list[Node]:
         raise NotImplementedError
+
+
+if __name__ == '__main__':
+    a = Node('a')
+    b = Node('b')
+    c = Node('c')
+    d = Node('d')
+    a.point_to(b)
+    b.point_to(d)
+    a.point_to(c)
+    g = Graph(a)
+    print(g.dfs())
+    assert g.dfs() == [a, b, d, c]
